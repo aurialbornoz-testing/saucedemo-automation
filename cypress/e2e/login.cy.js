@@ -7,17 +7,17 @@ describe('Login page', () => {
   })
 
   it('should log in with valid credentials', () => {
-    loginPage.typeUserName('standard_user')
-    loginPage.typePassword('secret_sauce')
+    loginPage.typeUserName(Cypress.env('standardUser'))
+    loginPage.typePassword(Cypress.env('password'))
     loginPage.clickLogin()
-
+ 
     // Assert: we should land on the inventory page
     cy.url().should('include', '/inventory.html')
   })
 
   it('should show an error for a locked out user', () => {
-    loginPage.typeUserName('locked_out_user')
-    loginPage.typePassword('secret_sauce')
+    loginPage.typeUserName(Cypress.env('lockedOutUser'))
+    loginPage.typePassword(Cypress.env('password'))
     loginPage.clickLogin()
 
     // Assert: the error message should be visible with the correct text
@@ -27,8 +27,8 @@ describe('Login page', () => {
   })
   
   it('should show an error for an incorrect password', () => {
-    loginPage.typeUserName('standard_user')
-    loginPage.typePassword('wrong_password')
+    loginPage.typeUserName(Cypress.env('standardUser'))
+    loginPage.typePassword(Cypress.env('wrongPassword'))
     loginPage.clickLogin()
 
     // Assert: the error message should be visible with the correct text
@@ -38,7 +38,7 @@ describe('Login page', () => {
   })
 
   it('should show an error when username is empty', () => {
-    loginPage.typePassword('secret_sauce')
+    loginPage.typePassword(Cypress.env('password'))
     loginPage.clickLogin()
 
     loginPage.getErrorMessage()
@@ -47,7 +47,7 @@ describe('Login page', () => {
   })
 
   it('should show an error when password is empty', () => {
-    loginPage.typeUserName('standard_user')
+    loginPage.typeUserName(Cypress.env('standardUser'))
     loginPage.clickLogin()
 
     loginPage.getErrorMessage()
